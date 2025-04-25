@@ -82,8 +82,8 @@ export default function FilterComponent({
         <div className="filter-group">
           <h4>Specialities</h4>
           <SpecialtyFilter
-            selectedSpecialties={selectedSpecialities}
-            setSelectedSpecialties={setSelectedSpecialities}
+            selectedSpecialities={selectedSpecialities}
+            setSelectedSpecialities={setSelectedSpecialities}
             specialitiesList={specialitiesList}
           />
         </div>

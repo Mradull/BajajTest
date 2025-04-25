@@ -58,11 +58,12 @@ function App() {
   
     if (filters.specialities.length > 0) {
       result = result.filter((doc) =>
-        filters.specialities.every((s) =>
-          doc.speciality.map((spec) => spec.name).includes(s)
+        doc.specialities?.some((spec) =>
+          filters.specialities.includes(spec.name)
         )
       );
     }
+    
   
     if (filters.sort === "fees") {
       result.sort((a, b) => {
@@ -77,7 +78,8 @@ function App() {
         return expB - expA;
       });
     }
-  
+    console.log("Filtered by specialities:", result.map((d) => d.name));
+
     setFilteredDoctors(result);
   }, [params, doctors, consultationMode, selectedSpecialities, sortOption]);
   

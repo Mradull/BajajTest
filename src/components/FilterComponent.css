@@ -52,6 +52,20 @@
   font-size: 1rem;
 }
 
+.specialty-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.checkbox-label {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
 /* Speciality list styling */
 .speciality-list {
   display: flex;
