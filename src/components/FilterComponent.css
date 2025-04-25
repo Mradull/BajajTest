@@ -1,0 +1,66 @@
+/* src/components/FilterComponent.css */
+
+.filters-container {
+    width: 100%;
+    max-width: 300px;
+    padding: 1rem;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .sort-section,
+  .filter-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .sort-section h3,
+  .filter-header h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    color: #1e293b;
+  }
+  
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .clear-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  
+  .filter-group {
+    margin-bottom: 1rem;
+  }
+  
+  .filter-group h4 {
+    margin-bottom: 0.5rem;
+    color: #475569;
+    font-size: 1rem;
+  }
+  
+  .speciality-list {
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #334155;
+  }
+  
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin-right: 8px;
+  }
+  

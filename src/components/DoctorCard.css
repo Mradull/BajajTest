@@ -1,0 +1,63 @@
+.doctor-card {
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .doctor-left {
+    flex: 0 0 auto;
+    margin-right: 20px;
+  }
+  
+  .doctor-photo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .doctor-middle {
+    flex: 1;
+  }
+  
+  .doctor-middle h3 {
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .doctor-speciality, .doctor-qualifications, .doctor-experience, .doctor-clinic, .doctor-location {
+    font-size: 14px;
+    margin: 2px 0;
+    color: #555;
+  }
+  
+  .doctor-right {
+    text-align: right;
+    min-width: 150px;
+  }
+  
+  .doctor-fees {
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+  
+  .book-button {
+    background: none;
+    color: #007bff;
+    border: 1px solid #007bff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .book-button:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
