@@ -13,14 +13,6 @@ export default function FilterComponent({
   specialitiesList,
   clearFilters,
 }) {
-  const handleSpecialityChange = (spec) => {
-    if (selectedSpecialities.includes(spec)) {
-      setSelectedSpecialities(selectedSpecialities.filter((s) => s !== spec));
-    } else {
-      setSelectedSpecialities([...selectedSpecialities, spec]);
-    }
-  };
-
   return (
     <div className="filters-container">
       <div className="sort-section">
@@ -89,9 +81,9 @@ export default function FilterComponent({
 
         <div className="filter-group">
           <h4>Specialities</h4>
-          <SpecialtyFilter 
-            selectedSpecialties={selectedSpecialities} 
-            setSelectedSpecialties={setSelectedSpecialities} 
+          <SpecialtyFilter
+            selectedSpecialties={selectedSpecialities}
+            setSelectedSpecialties={setSelectedSpecialities}
             specialitiesList={specialitiesList}
           />
         </div>

@@ -43,19 +43,19 @@ function App() {
 
   useEffect(() => {
     if (!doctors || doctors.length === 0) return;
-
+  
     let result = [...doctors];
-
+  
     if (filters.search) {
       result = result.filter((doc) =>
         doc.name.toLowerCase().includes(filters.search.toLowerCase())
       );
     }
-
+  
     if (filters.mode) {
       result = result.filter((doc) => doc.mode === filters.mode);
     }
-
+  
     if (filters.specialities.length > 0) {
       result = result.filter((doc) =>
         filters.specialities.every((s) =>
@@ -63,15 +63,24 @@ function App() {
         )
       );
     }
-
+  
     if (filters.sort === "fees") {
-      result.sort((a, b) => a.fees - b.fees);
+      result.sort((a, b) => {
+        const feesA = parseInt(a.fees.replace(/[^\d]/g, ""), 10);
+        const feesB = parseInt(b.fees.replace(/[^\d]/g, ""), 10);
+        return feesA - feesB;
+      });
     } else if (filters.sort === "experience") {
-      result.sort((a, b) => b.experience - a.experience);
+      result.sort((a, b) => {
+        const expA = parseInt(a.experience.replace(/[^\d]/g, ""), 10);
+        const expB = parseInt(b.experience.replace(/[^\d]/g, ""), 10);
+        return expB - expA;
+      });
     }
-
+  
     setFilteredDoctors(result);
   }, [params, doctors, consultationMode, selectedSpecialities, sortOption]);
+  
 
   if (loading) return <div>Loading...</div>;
 
