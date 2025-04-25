@@ -1,66 +1,90 @@
-/* src/components/FilterComponent.css */
-
+/* Main container for filters */
 .filters-container {
-    width: 100%;
-    max-width: 300px;
-    padding: 1rem;
-    border-radius: 12px;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  .sort-section,
-  .filter-section {
-    margin-bottom: 1.5rem;
-  }
-  
-  .sort-section h3,
-  .filter-header h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
-    color: #1e293b;
-  }
-  
-  .filter-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .clear-btn {
-    background: none;
-    border: none;
-    color: #007bff;
-    font-size: 0.9rem;
-    cursor: pointer;
-  }
-  
-  .filter-group {
-    margin-bottom: 1rem;
-  }
-  
-  .filter-group h4 {
-    margin-bottom: 0.5rem;
-    color: #475569;
-    font-size: 1rem;
-  }
-  
-  .speciality-list {
-    max-height: 150px;
-    overflow-y: auto;
-    padding-right: 4px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: #334155;
-  }
-  
-  input[type="checkbox"],
-  input[type="radio"] {
-    margin-right: 8px;
-  }
-  
+  width: 100%;
+  max-width: 300px;
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Sort section and Filter section - Ensure these are stacked vertically */
+.sort-section,
+.filter-section {
+  margin-bottom: 1.5rem;
+  display: block;  /* Ensures sections are stacked vertically */
+}
+
+/* Section titles styling */
+.sort-section h3,
+.filter-header h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: #1e293b;
+}
+
+/* Filter header container for clearing filters */
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Clear button styling */
+.clear-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* Group for filters and specialties */
+.filter-group {
+  margin-bottom: 1rem;
+}
+
+/* Title for the filter groups */
+.filter-group h4 {
+  margin-bottom: 0.5rem;
+  color: #475569;
+  font-size: 1rem;
+}
+
+/* Speciality list styling */
+.speciality-list {
+  display: flex;
+  flex-direction: column;  /* Stack vertically */
+  max-height: 150px; /* Restrict height for the specialty list */
+  overflow-y: auto; /* Enable vertical scroll if content overflows */
+  padding-right: 10px; /* Prevent overlap with the scrollbar */
+  gap: 10px;
+  border: 1px solid #ddd; /* Optional: Add a border around the list */
+  padding: 10px; /* Optional: Add padding inside the list */
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width/height */
+}
+
+
+/* Styling for each label (checkbox + text) */
+.speciality-list label {
+  display: flex;
+  align-items: center;  /* Align checkbox and text in a row */
+  gap: 8px;  /* Space between checkbox and the text */
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+/* Input styling */
+input[type="checkbox"],
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+/* Ensure sort section and mode section are stacked vertically */
+.sort-section,
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Add spacing between elements */
+}

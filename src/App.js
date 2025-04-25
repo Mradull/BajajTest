@@ -1,5 +1,6 @@
+// src/App.js
 import React, { useEffect, useState } from "react";
-import { fetchDoctors } from "./api";
+import { fetchDoctors, fetchSpecialities } from "./api"; 
 import DoctorList from "./components/DoctorList";
 import Filters from "./components/FilterComponent";
 import Header from "./components/Header";
@@ -14,20 +15,13 @@ function App() {
   const [sortOption, setSortOption] = useState("");
   const [specialities, setSpecialities] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
 
   const filters = {
     mode: consultationMode,
     specialities: selectedSpecialities,
     sort: sortOption,
     search: params.get("search") || "",
-  };
-
-  // Handle filter changes and update the URL search params
-  const handleFilterChange = (newFilters) => {
-    setConsultationMode(newFilters.mode);
-    setSelectedSpecialities(newFilters.specialities);
-    setSortOption(newFilters.sort);
   };
 
   const clearFilters = () => {
@@ -37,24 +31,12 @@ function App() {
   };
 
   useEffect(() => {
-    fetchDoctors().then((data) => {
-      console.log("Doctors fetched:", data);
-
-      if (Array.isArray(data)) {
-        setDoctors(data);
-        const allSpecs = new Set();
-
-        data.forEach((doc) => {
-          if (doc.speciality && Array.isArray(doc.speciality)) {
-            doc.speciality.forEach((s) => allSpecs.add(s.name.trim()));
-          }
-        });
-
-        setSpecialities([...allSpecs]);
-      } else {
-        setDoctors([]);
-        setSpecialities([]);
-      }
+    fetchDoctors().then(({ doctors, specialities }) => {
+      console.log("Doctors fetched:", doctors);
+      console.log("Specialities fetched:", specialities);
+  
+      setDoctors(Array.isArray(doctors) ? doctors : []);
+      setSpecialities(Array.isArray(specialities) ? specialities : []);
       setLoading(false);
     });
   }, []);
@@ -64,49 +46,39 @@ function App() {
 
     let result = [...doctors];
 
-    const hasFilters =
-      filters.search ||
-      filters.mode ||
-      filters.specialities.length > 0 ||
-      filters.sort;
+    if (filters.search) {
+      result = result.filter((doc) =>
+        doc.name.toLowerCase().includes(filters.search.toLowerCase())
+      );
+    }
 
-    if (hasFilters) {
-      if (filters.search) {
-        result = result.filter((doc) =>
-          doc.name.toLowerCase().includes(filters.search.toLowerCase())
-        );
-      }
+    if (filters.mode) {
+      result = result.filter((doc) => doc.mode === filters.mode);
+    }
 
-      if (filters.mode) {
-        result = result.filter((doc) => doc.mode === filters.mode);
-      }
+    if (filters.specialities.length > 0) {
+      result = result.filter((doc) =>
+        filters.specialities.every((s) =>
+          doc.speciality.map((spec) => spec.name).includes(s)
+        )
+      );
+    }
 
-      if (filters.specialities.length > 0) {
-        result = result.filter((doc) =>
-          filters.specialities.every((s) =>
-            doc.speciality.map((spec) => spec.name).includes(s)
-          )
-        );
-      }
-
-      if (filters.sort === "fees") {
-        result.sort((a, b) => a.fees - b.fees);
-      } else if (filters.sort === "experience") {
-        result.sort((a, b) => b.experience - a.experience);
-      }
+    if (filters.sort === "fees") {
+      result.sort((a, b) => a.fees - b.fees);
+    } else if (filters.sort === "experience") {
+      result.sort((a, b) => b.experience - a.experience);
     }
 
     setFilteredDoctors(result);
-  }, [params, doctors]);
+  }, [params, doctors, consultationMode, selectedSpecialities, sortOption]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div>
       <div className="header">
-        <Header data={doctors} onSearch={handleFilterChange} />
+        <Header data={doctors} />
       </div>
       <div className="app-container">
         <div className="sidebar">

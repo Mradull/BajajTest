@@ -34,7 +34,7 @@ export default function DoctorCard({ doctor }) {
       </div>
 
       <div className="doctor-right">
-        <p className="doctor-fees">₹ {doctor.fees}</p>
+        <p className="doctor-fees"> {doctor.fees}</p>
         <button className="book-button">Book Appointment</button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 // src/components/FilterComponent.jsx
 import React from "react";
 import "./FilterComponent.css";
+import SpecialtyFilter from "./SpecialtyFilter";
 
 export default function FilterComponent({
   selectedSpecialities,
@@ -12,7 +13,6 @@ export default function FilterComponent({
   specialitiesList,
   clearFilters,
 }) {
-  // Handle changes in speciality selection (checkboxes)
   const handleSpecialityChange = (spec) => {
     if (selectedSpecialities.includes(spec)) {
       setSelectedSpecialities(selectedSpecialities.filter((s) => s !== spec));
@@ -53,7 +53,6 @@ export default function FilterComponent({
           <button onClick={clearFilters} className="clear-btn">Clear All</button>
         </div>
 
-        {/* Mode of consultation (radio buttons) */}
         <div className="filter-group">
           <h4>Mode of Consultation</h4>
           <label>
@@ -88,28 +87,14 @@ export default function FilterComponent({
           </label>
         </div>
 
-        {/* Specialities (checkboxes) */}
         <div className="filter-group">
-  <h4>Specialities</h4>
-  <div className="speciality-list">
-    {specialitiesList.length > 0 ? (
-      specialitiesList.map((spec) => (
-        <label key={spec}>
-          <input
-            type="checkbox"
-            value={spec}
-            checked={selectedSpecialities.includes(spec)}
-            onChange={() => handleSpecialityChange(spec)}
+          <h4>Specialities</h4>
+          <SpecialtyFilter 
+            selectedSpecialties={selectedSpecialities} 
+            setSelectedSpecialties={setSelectedSpecialities} 
+            specialitiesList={specialitiesList}
           />
-          {spec}
-        </label>
-      ))
-    ) : (
-      <p>No specialities available</p> // Display this if the list is empty
-    )}
-  </div>
-</div>
-
+        </div>
       </div>
     </div>
   );
