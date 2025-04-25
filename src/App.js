@@ -14,6 +14,7 @@ function App() {
   const [sortOption, setSortOption] = useState("");
   const [specialities, setSpecialities] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [params] = useSearchParams();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -30,21 +31,27 @@ function App() {
 
   // Update query params when filters change
   useEffect(() => {
-    const params = {};
-
-    if (consultationMode) params.mode = consultationMode;
-    if (sortOption) params.sort = sortOption;
-    if (selectedSpecialities.length > 0)
-      params.speciality = selectedSpecialities;
-
-    setSearchParams(params, { replace: true });
-  }, [consultationMode, sortOption, selectedSpecialities, setSearchParams]);
-
+    const newParams = new URLSearchParams(searchParams.toString());
+  
+    // Only update filter-related params
+    if (consultationMode) newParams.set("mode", consultationMode);
+    else newParams.delete("mode");
+  
+    if (sortOption) newParams.set("sort", sortOption);
+    else newParams.delete("sort");
+  
+    newParams.delete("speciality");
+    selectedSpecialities.forEach((spec) => newParams.append("speciality", spec));
+  
+    // ✅ Don't touch the existing "search" param
+    setSearchParams(newParams, { replace: true });
+  }, [consultationMode, sortOption, selectedSpecialities]);
+  
   const filters = {
     mode: consultationMode,
     specialities: selectedSpecialities,
     sort: sortOption,
-    search: searchParams.get("search") || "",
+    search: params.get("search") || "",
   };
 
   const clearFilters = () => {

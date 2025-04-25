@@ -1,27 +1,69 @@
-/* Header.css */
 .search-form {
-    display: flex;
-    width: 100%;
-    max-width: 600px;
-    margin: auto;
-  }
-  
-  .search-input {
-    flex: 1;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px 0 0 8px;
-    outline: none;
-  }
-  
-  .search-button {
-    padding: 10px 15px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    font-size: 16px;
-    border-radius: 0 8px 8px 0;
-    cursor: pointer;
-  }
-  
+  position: relative;
+  width: 90%;  /* Ensure the form takes up 90% of its container */
+  max-width: 600px;  /* Max width of the search bar */
+  margin: 0 auto;  /* Centers the search bar */
+  display: flex;  /* Use flexbox to make the input and button inline */
+}
+
+.search-input {
+  flex-grow: 1;  /* Ensure the input field takes up available space */
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px 0 0 8px;
+  outline: none;
+}
+
+.search-button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Align the button content to the center */
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;  /* Positioning it directly below the search bar */
+  left: 50%;
+  transform: translateX(-50%);  /* Centers the dropdown horizontally */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 600px;  /* Match the width of the search bar */
+  z-index: 10;
+  border-radius: 6px;
+  margin-top: 4px;
+  padding: 0;
+  list-style: none;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.suggestion-item:hover {
+  background-color: #f5f5f5;
+}
+
+.suggestion-image {
+  width: 24px;   /* Smaller width */
+  height: 24px;  /* Smaller height */
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.suggestion-name {
+  font-size: 16px;
+  color: #333;
+}
