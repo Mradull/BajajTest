@@ -1,6 +1,5 @@
-// src/App.js
 import React, { useEffect, useState } from "react";
-import { fetchDoctors, fetchSpecialities } from "./api"; 
+import { fetchDoctors } from "./api";
 import DoctorList from "./components/DoctorList";
 import Filters from "./components/FilterComponent";
 import Header from "./components/Header";
@@ -15,26 +14,48 @@ function App() {
   const [sortOption, setSortOption] = useState("");
   const [specialities, setSpecialities] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [params] = useSearchParams();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Set initial state from query params
+  useEffect(() => {
+    const mode = searchParams.get("mode") || "";
+    const sort = searchParams.get("sort") || "";
+    const specialitiesFromParams = searchParams.getAll("speciality");
+
+    setConsultationMode(mode);
+    setSortOption(sort);
+    setSelectedSpecialities(specialitiesFromParams);
+  }, [searchParams]);
+
+  // Update query params when filters change
+  useEffect(() => {
+    const params = {};
+
+    if (consultationMode) params.mode = consultationMode;
+    if (sortOption) params.sort = sortOption;
+    if (selectedSpecialities.length > 0)
+      params.speciality = selectedSpecialities;
+
+    setSearchParams(params, { replace: true });
+  }, [consultationMode, sortOption, selectedSpecialities, setSearchParams]);
 
   const filters = {
     mode: consultationMode,
     specialities: selectedSpecialities,
     sort: sortOption,
-    search: params.get("search") || "",
+    search: searchParams.get("search") || "",
   };
 
   const clearFilters = () => {
     setConsultationMode("");
     setSelectedSpecialities([]);
     setSortOption("");
+    setSearchParams({});
   };
 
   useEffect(() => {
     fetchDoctors().then(({ doctors, specialities }) => {
-      console.log("Doctors fetched:", doctors);
-      console.log("Specialities fetched:", specialities);
-  
       setDoctors(Array.isArray(doctors) ? doctors : []);
       setSpecialities(Array.isArray(specialities) ? specialities : []);
       setLoading(false);
@@ -42,20 +63,24 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!doctors || doctors.length === 0) return;
-  
+    if (!doctors || doctors.length === 0) {
+      setFilteredDoctors([]);
+      return;
+    }
+    
+
     let result = [...doctors];
-  
+
     if (filters.search) {
       result = result.filter((doc) =>
         doc.name.toLowerCase().includes(filters.search.toLowerCase())
       );
     }
-  
+
     if (filters.mode) {
       result = result.filter((doc) => doc.mode === filters.mode);
     }
-  
+
     if (filters.specialities.length > 0) {
       result = result.filter((doc) =>
         doc.specialities?.some((spec) =>
@@ -63,8 +88,7 @@ function App() {
         )
       );
     }
-    
-  
+
     if (filters.sort === "fees") {
       result.sort((a, b) => {
         const feesA = parseInt(a.fees.replace(/[^\d]/g, ""), 10);
@@ -78,11 +102,9 @@ function App() {
         return expB - expA;
       });
     }
-    console.log("Filtered by specialities:", result.map((d) => d.name));
 
     setFilteredDoctors(result);
-  }, [params, doctors, consultationMode, selectedSpecialities, sortOption]);
-  
+  }, [doctors, consultationMode, selectedSpecialities, sortOption, searchParams]);
 
   if (loading) return <div>Loading...</div>;
 
